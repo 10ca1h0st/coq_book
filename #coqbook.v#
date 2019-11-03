@@ -22,4 +22,20 @@ Print anonymous_fun.
 Compute (anonymous_fun 1 2 3 4 5).
 Section binomial_def.
   Variables a b:Z.
+  Definition binomial (z:Z):=a*z+b.
+  Print binomial.
 End binomial_def.
+Print binomial.
+
+Definition p1:Z->Z:=binomial 5 2.
+Print p1.
+Compute (p1 3).
+
+Section sum_5_params.
+  Variables a b c d e:Z.
+  Definition sum_f:=a+b+c+d+e.
+End sum_5_params.
+
+Print sum_f.
+Compute (sum_f 1 2 3 4 5).
+
