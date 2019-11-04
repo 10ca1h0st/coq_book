@@ -39,3 +39,34 @@ End sum_5_params.
 Print sum_f.
 Compute (sum_f 1 2 3 4 5).
 
+Section h_def.
+  Variables a b:Z.
+  Let s:Z:=a+b.
+  Let d:Z:=a-b.
+  Definition h:Z:=s*s+d*d.
+End h_def.
+Print h.
+Check h.
+
+Definition h_2:=fun (a b:Z)=>(a+b)*(a+b)+(a-b)*(a-b).
+Print h_2.
+
+(*Eval usage*)
+
+Definition Zsqr(z:Z):Z:=z*z.
+Definition my_fun(f:Z->Z)(z:Z):Z:=f (f z).
+Eval cbv delta [my_fun Zsqr] in (my_fun Zsqr).
+Compute ((my_fun Zsqr) 2). (*2^4*)
+Eval cbv delta [my_fun] in (my_fun Zsqr).
+(*Eval cbv delta in (my_fun Zsqr).*)
+
+Eval cbv beta delta [my_fun Zsqr] in (my_fun Zsqr).
+
+Eval cbv delta [h_2] in (h_2 32 23).
+Eval cbv beta delta [h_2] in (h_2 32 23).
+Eval cbv beta zeta delta [h_2] in (h_2 32 23).
+
+Eval cbv delta [h] in (h 32 23).
+Eval cbv beta delta [h] in (h 32 23).
+Eval cbv beta zeta delta [h] in (h 32 23).
+
