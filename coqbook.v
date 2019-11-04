@@ -70,3 +70,15 @@ Eval cbv delta [h] in (h 32 23).
 Eval cbv beta delta [h] in (h 32 23).
 Eval cbv beta zeta delta [h] in (h 32 23).
 
+Definition f1:=fun x:Z=>2*x*x+3*x+3.
+Eval compute in (f1 2).
+Compute (f1 2).
+Eval cbv iota beta zeta delta [f1] in (f1 2).
+
+
+Check Z.
+Check 2.
+Check Z->Z.
+Check nat->nat.
+Check f1.
+Check (f1 2).
