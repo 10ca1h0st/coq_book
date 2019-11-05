@@ -82,3 +82,9 @@ Check Z->Z.
 Check nat->nat.
 Check f1.
 Check (f1 2).
+Check Set.
+Check Type.
+Check (nat->nat:Type).
+
+
+
