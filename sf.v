@@ -74,3 +74,53 @@ Theorem false_eqb_string : forall x y : string,
 Proof.
   intros x y. rewrite eqb_string_false_iff.
   intros H. apply H. Qed.
+
+Definition total_map (A : Type) := string -> A.
+Print total_map.
+
+Compute (total_map bool).
+
+Definition t_empty {A : Type} (v : A) : total_map A :=
+  (fun _ => v).
+
+Print t_empty.
+
+Compute (t_empty false).
+
+
+Definition t_update {A : Type} (m : total_map A)
+                    (x : string) (v : A) :=
+  fun x' => if eqb_string x x' then v else m x'.
+
+Print t_update.
+
+Check (t_update (t_empty false) "foo" true).
+
+Check (t_empty false).
+
+
+Definition examplemap :=
+  t_update (t_update (t_empty false) "foo" true)
+           "bar" true.
+Print examplemap.
+
+Definition examplemap2:=t_update examplemap "foo" false.
+
+Compute (examplemap "foo").
+Compute (examplemap "bar").
+Compute (examplemap2 "foo").
+
+Notation "'_' '!->' v" := (t_empty v)
+  (at level 100, right associativity).
+
+Example example_empty := (_ !-> false).
+
+Notation "x '!->' v ';' m" := (t_update m x v)
+                              (at level 100, v at next level, right associativity).
+
+
+Definition examplemap' :=
+  ( "bar" !-> true;
+    "foo" !-> true;
+    _     !-> false
+  ).
