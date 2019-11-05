@@ -88,6 +88,8 @@ Print t_empty.
 Compute (t_empty false).
 
 
+
+
 Definition t_update {A : Type} (m : total_map A)
                     (x : string) (v : A) :=
   fun x' => if eqb_string x x' then v else m x'.
