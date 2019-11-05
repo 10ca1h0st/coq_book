@@ -126,3 +126,10 @@ Definition examplemap' :=
     "foo" !-> true;
     _     !-> false
   ).
+
+Lemma t_apply_empty : forall (A : Type) (x : string) (v : A),
+    (_ !-> v) x = v.
+Proof.
+  intros A x v.
+  reflexivity.
+Qed.
