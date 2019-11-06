@@ -133,3 +133,37 @@ Proof.
   intros A x v.
   reflexivity.
 Qed.
+
+Lemma t_update_eq : forall (A : Type) (m : total_map A) x v,
+    (x !-> v ; m) x = v.
+Proof.
+  intros A m x v.
+  unfold t_update.
+  rewrite <- eqb_string_refl.
+  reflexivity.
+Qed.
+
+Theorem t_update_neq : forall (A : Type) (m : total_map A) x1 x2 v,
+    x1 <> x2 ->
+    (x1 !-> v ; m) x2 = m x2.
+Proof.
+  intros A m x1 x2 v.
+  unfold t_update.
+  intros H.
+  rewrite <- eqb_string_false_iff in H.
+  rewrite H.
+  reflexivity.
+ Qed.
+
+Lemma t_update_shadow : forall (A : Type) (m : total_map A) x v1 v2,
+    (x !-> v2 ; x !-> v1 ; m) = (x !-> v2 ; m).
+Proof.
+  intros A m x v1 v2.
+  apply functional_extensionality_dep.
+  unfold t_update.
+  intros x0.
+  unfold eqb_string.
+  destruct (string_dec x x0).
+    -reflexivity.
+    -reflexivity.
+Qed.
