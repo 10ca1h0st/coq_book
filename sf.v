@@ -167,3 +167,53 @@ Proof.
     -reflexivity.
     -reflexivity.
 Qed.
+
+Example apply_ex1:forall P Q:Prop,
+(P->Q)->P->Q.
+Proof.
+  intros P Q P_imply_Q P_holds.
+  (*apply P_imply_Q in P_holds.*)
+  apply P_imply_Q.
+  apply P_holds.
+Qed.
+
+Lemma eqb_stringP : forall x y : string,
+    reflect (x = y) (eqb_string x y).
+Proof.
+  intros x y.
+  (*Check (x=y).*)
+  (*Check (reflect (x = y) (eqb_string x y)).*)
+  unfold eqb_string.
+  destruct (string_dec x y).
+  - apply ReflectT. apply e.
+  - apply ReflectF. apply n.
+Qed.
+
+Theorem t_update_same : forall (A : Type) (m : total_map A) x,
+    (x !-> m x ; m) = m.
+Proof.
+  intros A m x.
+  unfold t_update.
+  apply functional_extensionality_dep.
+  intros x0.
+  destruct (eqb_stringP x x0).
+  - rewrite e. reflexivity.
+  - reflexivity.
+Qed.
+
+Theorem t_update_permute : forall (A : Type) (m : total_map A)
+                                  v1 v2 x1 x2,
+    x2 <> x1 ->
+    (x1 !-> v1 ; x2 !-> v2 ; m)
+    =
+    (x2 !-> v2 ; x1 !-> v1 ; m).
+Proof.
+  intros A m v1 v2 x1 x2.
+  intros H.
+  unfold t_update.
+  apply functional_extensionality_dep.
+  intros x.
+  destruct (eqb_stringP x1 x).
+  - rewrite e in H. apply <- eqb_string_false_iff in H. rewrite H. reflexivity.
+  - destruct (eqb_string x2 x). reflexivity. reflexivity.
+Qed.
