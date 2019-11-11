@@ -87,4 +87,9 @@ Check Type.
 Check (nat->nat:Type).
 
 
+Section Minimal_propositional_logic.
+  Variables P Q R T:Prop.
+  Theorem imp_trans:(P->Q)->(Q->R)->P->R.
+End Minimal_propositional_logic.
+
 
