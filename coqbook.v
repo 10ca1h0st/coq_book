@@ -86,10 +86,34 @@ Check Set.
 Check Type.
 Check (nat->nat:Type).
 
-
 Section Minimal_propositional_logic.
   Variables P Q R T:Prop.
   Theorem imp_trans:(P->Q)->(Q->R)->P->R.
-End Minimal_propositional_logic.
+    Proof.
+      intros H H' p.
+      apply H'.
+      apply H.
+      (*apply p.*)
+      (*assumption.*)
+      exact p.
+    Qed.
+  Check (P->Q)->(Q->R)->P->R.
+  
 
+  
+  Section example_of_assumption.
+    Hypothesis H:P->Q->R.
+    Lemma L1:P->Q->R.
+      Proof.
+        assumption.
+      Qed.
+    Theorem delta:(P->P->Q)->P->Q.
+      Proof.
+        exact (fun (H:P->P->Q)(p:P)=>H p p).
+      Qed.
+  End example_of_assumption.
+
+
+
+End Minimal_propositional_logic.
 
