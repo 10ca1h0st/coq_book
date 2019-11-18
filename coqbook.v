@@ -112,8 +112,48 @@ Section Minimal_propositional_logic.
         exact (fun (H:P->P->Q)(p:P)=>H p p).
       Qed.
   End example_of_assumption.
+  
+  Theorem apply_example : (Q->R->T)->(P->Q)->P->R->T.
+  Proof.
+    intros H H0 p.
+    apply H.
+    exact (H0 p).
+  Qed.
+  
+  Theorem imp_dist:(P->Q->R)->(P->Q)->(P->R).
+    Proof.
+      intros H H' p.
+      Show 1.
+      apply H.
+      apply p.
+      exact (H' p).
+    Qed.
+  
+  Definition f:(nat->bool)->(nat->bool)->nat->bool.
+    intros f1 f2.
+    assumption.
+  Defined.
+  Print f.
+    
 
 
 
 End Minimal_propositional_logic.
+
+Print imp_dist.
+
+Section section_for_cut_example.
+  Variables P Q R T:Prop.
+  Hypothesis (H:P->Q) (H0:Q->R) (H1:(P->R)->T->Q) (H2:(P->R)->T).
+  
+  Theorem cut_example:Q.
+    Proof.
+      cut (P->R).
+      intros H3.
+      apply H1;[assumption|apply H2;assumption].
+      intros H3.
+      apply H0;apply H;assumption.
+    Qed.
+End section_for_cut_example.
+      
 
